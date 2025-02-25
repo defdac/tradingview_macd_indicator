@@ -1,0 +1,1 @@
+# tradingview_macd_indicator
