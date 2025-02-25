@@ -1,0 +1,22 @@
+//@version=6
+indicator("MACD indicator", overlay=false)
+
+// Input parameters
+fastLength = input.int(12, title="Fast EMA Length")
+slowLength = input.int(26, title="Slow EMA Length")
+signalSmoothing = input.int(9, title="Signal SMA Length")
+
+// MACD Calculation
+fastEMA = ta.ema(close, fastLength)
+slowEMA = ta.ema(close, slowLength)
+macdLine = fastEMA - slowEMA
+signalLine = ta.sma(macdLine, signalSmoothing)
+histogram = macdLine - signalLine
+
+// Plot the MACD
+plot(macdLine, color=color.blue, title="MACD Line", linewidth=2)
+plot(signalLine, color=color.orange, title="Signal Line", linewidth=2)
+
+// Histogram with color change
+histColor = histogram >= 0 ? color.green : color.red
+plot(histogram, color=histColor, title="Histogram", style=plot.style_columns)
